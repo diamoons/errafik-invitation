@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Invitation · Association Errafik · 31.10.2026</title>
+<meta name="description" content="Samedi 31 octobre 2026 · 17:00 · Sfax — Confirmez votre présence. · السبت 31 أكتوبر 2026 · أكّدو حضوركم.">
+<!-- link preview (WhatsApp / Facebook): a frame of the date card — never the new logo before the 31st -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Invitation · Association Errafik · 31.10.2026">
+<meta property="og:description" content="Samedi 31 octobre 2026 · 17:00 · Sfax — Votre présence compte. · حضوركم يهمّنا">
+<meta property="og:image" content="media/preview.jpg">
+<meta name="theme-color" content="#F3EDE4">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23F3EDE4'/%3E%3Crect x='6' y='15' width='20' height='3' rx='1.5' fill='%230EA5E9'/%3E%3C/svg%3E">
+<script src="config.js"></script>
+<style>
+  @font-face { font-family: Ami; font-weight: 400; font-display: swap; src: url(fonts/amiri-arabic-400-normal.woff2); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
+  @font-face { font-family: Ami; font-weight: 700; font-display: swap; src: url(fonts/amiri-arabic-700-normal.woff2); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
+  @font-face { font-family: Ami; font-weight: 400; font-display: swap; src: url(fonts/amiri-latin-400-normal.woff2); unicode-range: U+0000-00FF, U+2000-206F; }
+  @font-face { font-family: Ami; font-weight: 700; font-display: swap; src: url(fonts/amiri-latin-700-normal.woff2); unicode-range: U+0000-00FF, U+2000-206F; }
+  @font-face { font-family: Cor; font-style: italic; font-weight: 500; font-display: swap; src: url(fonts/cormorant-garamond-latin-500-italic.woff2); unicode-range: U+0000-00FF, U+2000-206F; }
+  @font-face { font-family: Cor; font-style: italic; font-weight: 500; font-display: swap; src: url(fonts/cormorant-garamond-latin-ext-500-italic.woff2); unicode-range: U+0100-024F; }
+  @font-face { font-family: Cor; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/cormorant-garamond-latin-600-normal.woff2); }
+  @font-face { font-family: Cor; font-style: normal; font-weight: 600; src: url(fonts/amiri-latin-700-normal.woff2); unicode-range: U+0030-003A; }
+  @font-face { font-family: Cor; font-style: italic; font-weight: 500; src: url(fonts/amiri-latin-400-normal.woff2); unicode-range: U+0030-003A; }
+
+  :root { --linen: #F3EDE4; --ink: #2B2522; --ink2: #6F645B; --paper: #FFFDF8; --thread: #0EA5E9; --line: rgba(43,37,34,.18); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: url(media/paper.jpg) center / cover, var(--linen); background-blend-mode: multiply; color: var(--ink);
+         font: 400 18px/1.5 Ami, serif; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+
+  /* ---------- the film: fills the screen; letterbox = the same paper as the film */
+  #stage { position: fixed; inset: 0; display: grid; place-items: center; }
+  #film { width: 100%; height: 100%; object-fit: contain; background: transparent; transition: filter .8s ease, opacity .8s ease; }
+  body.form-open #film { filter: blur(2px) brightness(.97); opacity: .55; }
+  .chip { position: fixed; z-index: 5; display: flex; align-items: center; gap: 10px; white-space: nowrap; padding: 12px 20px; border-radius: 999px;
+          background: rgba(255,253,248,.92); border: 1.5px solid var(--ink); box-shadow: 0 6px 24px rgba(60,40,20,.14);
+          transition: opacity .4s ease, transform .4s ease; }
+  .chip .a { font: 700 19px/1.2 Ami, serif; direction: rtl; } .chip .f { font: italic 500 16px/1.2 Cor, serif; direction: ltr; color: var(--ink2); }
+  .chip.hide { opacity: 0; pointer-events: none; transform: translateY(8px); }
+  #sound { left: 50%; bottom: max(28px, env(safe-area-inset-bottom)); transform: translateX(-50%); }
+  #sound.hide { transform: translate(-50%, 8px); }
+  #skip { top: max(16px, env(safe-area-inset-top)); left: 16px; padding: 9px 16px; }
+  #skip .a { font-size: 16px; } #skip .f { font-size: 14px; }
+  #bigplay { position: fixed; inset: 0; z-index: 6; display: none; place-items: center; background: rgba(243,237,228,.6); border: 0; }
+  #bigplay span { width: 96px; height: 96px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); display: grid; place-items: center;
+                  box-shadow: 0 10px 30px rgba(60,40,20,.18); }
+
+  /* ---------- the RSVP sheet: rises from below, like the end card's ↓ */
+  #sheet { position: fixed; z-index: 8; left: 50%; bottom: 0; width: min(560px, 100%); max-height: 100%; overflow-y: auto; overflow-x: hidden;
+           transform: translate(-50%, 104%); transition: transform .7s cubic-bezier(.2,.8,.2,1);
+           background: url(media/paper.jpg) center / 900px auto, var(--paper); background-blend-mode: multiply;
+           border-radius: 22px 22px 0 0; box-shadow: 0 -10px 40px rgba(60,40,20,.18); padding: 30px 28px max(28px, env(safe-area-inset-bottom)); }
+  body.form-open #sheet { transform: translate(-50%, 0); }
+  @media (orientation: landscape) and (min-height: 560px) {
+    #sheet { bottom: auto; top: 50%; border-radius: 22px; max-height: calc(100% - 48px); transform: translate(-50%, 120%); }
+    body.form-open #sheet { transform: translate(-50%, -50%); }
+  }
+  @media (orientation: landscape) and (min-width: 820px) {   /* wide screens: a wider card, fields side by side, no scrolling at 720 px */
+    #sheet { width: min(780px, calc(100% - 48px)); padding: 26px 34px 24px; }
+    form { grid-template-columns: 1fr 1fr; column-gap: 18px; }
+    form > .choice, form > #send, form > #err { grid-column: 1 / -1; }
+    .head { margin-bottom: 12px; } .head h1 { font-size: 32px; }
+  }
+  .head { text-align: center; margin-bottom: 18px; }
+  .head h1 { font: 700 34px/1.25 Ami, serif; }
+  .head p.f { font: italic 500 21px/1.3 Cor, serif; color: var(--ink2); direction: ltr; }
+  .head .when { margin-top: 10px; font: 700 18px/1.4 Ami, serif; }
+  .head .when .f2 { display: block; font: 600 17px/1.4 Cor, serif; direction: ltr; color: var(--ink2); }
+  .rule { width: 120px; height: 3px; margin: 14px auto 4px; background: var(--thread); border-radius: 2px; }
+  #greet { text-align: center; font: italic 500 20px/1.3 Cor, serif; direction: ltr; margin-bottom: 8px; display: none; }
+  form { display: grid; gap: 14px; }
+  label { display: grid; gap: 4px; }
+  .lb { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .lb .a { font: 700 17px/1.2 Ami, serif; } .lb .f { font: italic 500 16px/1.2 Cor, serif; color: var(--ink2); direction: ltr; }
+  .lb .opt { font: 400 13px Ami, serif; color: var(--ink2); }
+  input[type=text], input[type=tel], input[type=email] { width: 100%; padding: 12px 14px; font: 400 18px/1.3 Ami, serif; color: var(--ink);
+        background: rgba(255,253,248,.85); border: 1.5px solid var(--line); border-radius: 12px; outline: none; }
+  input:focus { border-color: var(--thread); box-shadow: 0 0 0 3px rgba(14,165,233,.15); }
+  input.bad { border-color: #B4442F; }
+  .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .choice input { position: absolute; opacity: 0; pointer-events: none; }
+  .choice label { padding: 12px 10px; text-align: center; border: 1.5px solid var(--line); border-radius: 12px; background: rgba(255,253,248,.85); cursor: pointer; }
+  .choice label .a { font: 700 17px/1.25 Ami, serif; display: block; } .choice label .f { font: italic 500 15px/1.2 Cor, serif; color: var(--ink2); direction: ltr; display: block; }
+  .choice input:checked + label { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+  .choice input:checked + label .f { color: rgba(255,253,248,.75); }
+  .choice.bad label { border-color: #B4442F; }
+  .hp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  #send { margin-top: 6px; padding: 14px 18px 16px; border-radius: 999px; border: 2px solid var(--ink); background: var(--ink); color: var(--paper); }
+  #send .a { font: 700 21px/1.2 Ami, serif; display: block; } #send .f { font: italic 500 16px/1.2 Cor, serif; direction: ltr; display: block; opacity: .8; }
+  #send[disabled] { opacity: .55; cursor: wait; }
+  #err { display: none; text-align: center; color: #B4442F; font: 400 15px/1.4 Ami, serif; }
+  .links { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 16px; }
+  .links a, .links button { background: none; border: 0; text-decoration: underline; text-underline-offset: 3px; font: 400 15px Ami, serif; color: var(--ink2); }
+  #thanks { display: none; text-align: center; padding: 10px 0 4px; }
+  #thanks h2 { font: 700 32px/1.3 Ami, serif; } #thanks p.f { font: italic 500 20px/1.3 Cor, serif; direction: ltr; color: var(--ink2); }
+  #thanks .act { display: grid; gap: 10px; margin-top: 20px; }
+  #thanks .act a { display: block; padding: 12px; border-radius: 999px; border: 1.5px solid var(--ink); text-decoration: none; color: var(--ink); }
+  #thanks .act .a { font: 700 18px/1.2 Ami, serif; display: block; } #thanks .act .f { font: italic 500 15px Cor, serif; direction: ltr; color: var(--ink2); display: block; }
+</style>
+</head>
+<body>
+<div id="stage"><video id="film" playsinline muted autoplay preload="auto"></video></div>
+<button class="chip hide" id="sound" type="button"><span class="a">🔊 شغّلو الصوت</span><span class="f">Activer le son</span></button>
+<button class="chip hide" id="skip" type="button"><span class="a">أكّدو حضوركم</span><span class="f">Confirmer ↓</span></button>
+<button id="bigplay" type="button" aria-label="Lire la vidéo"><span><svg width="34" height="34" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#2B2522"/></svg></span></button>
+
+<section id="sheet" aria-label="Confirmation de présence">
+  <div class="head">
+    <h1>حضوركم يهمّنا</h1>
+    <p class="f">Votre présence compte.</p>
+    <div class="rule"></div>
+    <div class="when">السبت 31 أكتوبر 2026 · 17:00 · مقرّ جمعية الرفيق، صفاقس
+      <span class="f2">Samedi 31 octobre 2026 · 17:00 · Siège de l'Association Errafik, Sfax</span></div>
+  </div>
+  <p id="greet"></p>
+
+  <form id="rsvp" novalidate>
+    <label><span class="lb"><span class="a">الاسم واللقب</span><span class="f">Nom et prénom</span></span>
+      <input type="text" name="name" autocomplete="name" dir="auto" required maxlength="120"></label>
+    <label><span class="lb"><span class="a">الهاتف</span><span class="f">Téléphone</span></span>
+      <input type="tel" name="phone" autocomplete="tel" inputmode="tel" dir="ltr" placeholder="+216 •• ••• •••" required maxlength="24"></label>
+    <label><span class="lb"><span class="a">البريد الإلكتروني <span class="opt">(اختياري)</span></span><span class="f">E-mail (facultatif)</span></span>
+      <input type="email" name="email" autocomplete="email" dir="ltr" maxlength="160"></label>
+    <label><span class="lb"><span class="a">المؤسسة <span class="opt">(اختياري)</span></span><span class="f">Organisation (facultatif)</span></span>
+      <input type="text" name="organisation" autocomplete="organization" dir="auto" maxlength="160"></label>
+    <div class="choice" id="att" role="radiogroup">
+      <input type="radio" name="attending" id="a-yes" value="yes"><label for="a-yes"><span class="a">باش نحضر</span><span class="f">Je serai présent(e)</span></label>
+      <input type="radio" name="attending" id="a-no" value="no"><label for="a-no"><span class="a">ما نجّمش نحضر</span><span class="f">Je ne pourrai pas venir</span></label>
+    </div>
+    <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+    <button id="send" type="submit"><span class="a">أكّدو</span><span class="f">Confirmer</span></button>
+    <p id="err"></p>
+  </form>
+
+  <div id="thanks">
+    <h2 id="tA"></h2>
+    <p class="f" id="tF"></p>
+    <div class="act" id="tAct">
+      <a href="invitation.ics" download="Errafik-31-10-2026.ics"><span class="a">زيدوها للأجندة</span><span class="f">Ajouter au calendrier</span></a>
+      <a id="map" target="_blank" rel="noopener"><span class="a">الطريق للمقرّ</span><span class="f">Itinéraire · Route de Sokra, km 0,5 · Sfax</span></a>
+    </div>
+  </div>
+  <div class="links"><button type="button" id="replay">↺ عاودو شوفو الفيديو · Revoir le film</button></div>
+</section>
+
+<script>
+(() => {
+  const C = Object.assign({ endpoint: '', mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Association+Errafik+Route+de+Sokra+km+0.5+Sfax' }, window.RSVP_CONFIG || {});
+  const $ = id => document.getElementById(id), film = $('film'), body = document.body;
+  const q = new URLSearchParams(location.search), code = (q.get('g') || '').slice(0, 64);   // personal link code (opaque), optional
+  $('map').href = C.mapsUrl;
+
+  // ---- portrait phones get the 9:16 film, wide screens the 16:9 one; on rotation keep the same moment
+  const pick = () => (innerWidth / innerHeight < 1 ? 'media/invitation-9x16.mp4' : 'media/invitation-16x9.mp4');
+  let cur = '';
+  function load(keepTime) {
+    const src = pick(); if (src === cur) return;
+    const t = keepTime ? film.currentTime : 0, playing = !film.paused;
+    cur = src; film.poster = src.replace('.mp4', '.jpg'); film.src = src;
+    film.addEventListener('loadedmetadata', () => { if (t) film.currentTime = t; if (playing || !keepTime) start(); }, { once: true });
+  }
+  let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (!body.classList.contains('form-open')) load(true); }, 250); });
+
+  function start() {
+    film.play().then(() => { $('bigplay').style.display = 'none'; if (film.muted) $('sound').classList.remove('hide'); })
+               .catch(() => { $('bigplay').style.display = 'grid'; });    // autoplay blocked (low-power mode…): one tap
+  }
+  $('bigplay').onclick = () => { film.muted = false; $('sound').classList.add('hide'); start(); };
+  $('sound').onclick = () => { film.muted = false; film.currentTime = 0; film.play(); $('sound').classList.add('hide'); };
+  setTimeout(() => $('skip').classList.remove('hide'), 2500);
+  $('skip').onclick = openForm;
+  film.addEventListener('ended', () => setTimeout(openForm, 350));     // the end card holds, then the form rises from below (its ↓)
+
+  function openForm() {
+    film.pause(); body.classList.add('form-open'); ['sound', 'skip'].forEach(id => $(id).classList.add('hide'));
+    setTimeout(() => { const f = document.querySelector('#rsvp input[name=name]'); if (f && !matchMedia('(pointer: coarse)').matches) f.focus(); }, 750);
+  }
+  $('replay').onclick = () => { body.classList.remove('form-open'); load(false); film.currentTime = 0; film.muted = false; film.play(); setTimeout(() => $('skip').classList.remove('hide'), 2500); };
+
+  // ---- personal greeting (optional): the server may know the guest behind ?g=… (see README_DEV.md)
+  if (code && C.guestEndpoint) fetch(C.guestEndpoint + encodeURIComponent(code)).then(r => r.ok ? r.json() : null).then(g => {
+    if (!g) return; const f = $('rsvp');
+    if (g.greeting) { $('greet').textContent = g.greeting; $('greet').style.display = 'block'; }
+    ['name', 'phone', 'email', 'organisation'].forEach(k => { if (g[k]) f[k].value = g[k]; });
+  }).catch(() => {});
+
+  // ---- the form
+  const form = $('rsvp'), err = m => { $('err').textContent = m; $('err').style.display = m ? 'block' : 'none'; };
+  const phoneOk = v => (v.replace(/[^\d]/g, '').length >= 8);
+  const mailOk = v => !v || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  form.addEventListener('submit', async e => {
+    e.preventDefault(); err('');
+    const d = Object.fromEntries(new FormData(form).entries());
+    Object.keys(d).forEach(k => d[k] = String(d[k]).trim());
+    form.name.classList.toggle('bad', d.name.length < 3);
+    form.phone.classList.toggle('bad', !phoneOk(d.phone));
+    form.email.classList.toggle('bad', !mailOk(d.email));
+    $('att').classList.toggle('bad', !d.attending);
+    if (d.name.length < 3 || !phoneOk(d.phone) || !mailOk(d.email) || !d.attending)
+      return err('عاودو ثبّتو الخانات المعلّمة · Merci de vérifier les champs en rouge.');
+    if (d.website) return done(d.attending);                            // honeypot: a bot filled the hidden field
+    const payload = { name: d.name, phone: d.phone, email: d.email || null, organisation: d.organisation || null,
+                      attending: d.attending === 'yes', code: code || null, lang: navigator.language || '', source: 'invitation-film',
+                      submitted_at: new Date().toISOString() };
+    $('send').disabled = true;
+    try {
+      if (!C.endpoint) { console.warn('RSVP demo mode (no endpoint in config.js):', payload); await new Promise(r => setTimeout(r, 600)); }
+      else {
+        const r = await fetch(C.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', ...(C.headers || {}) }, body: JSON.stringify(payload) });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+      }
+      done(d.attending);
+    } catch (x) {
+      err('ما تبعثش، عاودو جرّبو بعد شويّة · L’envoi a échoué, réessayez dans un instant.');
+    } finally { $('send').disabled = false; }
+  });
+  function done(att) {
+    form.style.display = 'none'; $('thanks').style.display = 'block';
+    $('tA').textContent = att === 'yes' ? 'يعيشكم، نستنّاو فيكم' : 'يعيشكم على الردّ';
+    $('tF').textContent = att === 'yes' ? 'Merci, nous vous attendons samedi 31 octobre à 17:00.' : 'Merci de nous avoir répondu.';
+    $('tAct').style.display = att === 'yes' ? 'grid' : 'none';
+  }
+
+  load(false);
+})();
+</script>
+</body>
+</html>
