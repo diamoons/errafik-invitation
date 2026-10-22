@@ -4,10 +4,10 @@ PRODID:-//Association Errafik//Invitation 2026//FR
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
 UID:errafik-invitation-20261031@errafik
-DTSTAMP:20261014T000000Z
-DTSTART:20261031T160000Z
+DTSTAMP:20261022T000000Z
+DTSTART:20261031T150000Z
 SUMMARY:Association Errafik · Un nouveau chapitre (sur invitation)
 LOCATION:Siège de l'Association Errafik\, Route de Sokra km 0\,5\, Sfax
-DESCRIPTION:Samedi 31 octobre 2026 à 17:00 · السبت 31 أكتوبر 2026
+DESCRIPTION:Samedi 31 octobre 2026 à 16:00 · السبت 31 أكتوبر 2026
 END:VEVENT
 END:VCALENDAR
